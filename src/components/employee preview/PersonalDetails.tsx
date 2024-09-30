@@ -1,9 +1,9 @@
 "use client"
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Label } from "../../components/ui/label"
-import { Button } from "../../components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { Label } from "../ui/label"
+import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
-import { Separator } from "../../components/ui/separator"
+import { Separator } from "../ui/separator"
 import { format } from "date-fns"
 
 export default function PersonalDetails({ employee }: { employee: Employee }) {

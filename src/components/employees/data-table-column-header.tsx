@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "../../components/ui/button"
+import { Button } from "../ui/button"
 
 interface DataTableColumnHeaderProps<Employee, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
-import { Avatar, AvatarImage } from "../../components/ui/avatar"
+import { Avatar, AvatarImage } from "../ui/avatar"
 import { PREVIEW_URL } from "@/utils/constants"
 import maleUserPlaceholder from "../../../public/images/male-user.png"
 

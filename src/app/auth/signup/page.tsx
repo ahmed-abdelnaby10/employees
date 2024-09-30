@@ -1,4 +1,4 @@
-import { SignupForm } from '@/sections/auth/SignupForm'
+import { SignupForm } from '@/components/auth/SignupForm'
 import { Metadata } from 'next'
 import React from 'react'
 

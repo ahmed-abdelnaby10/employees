@@ -26,7 +26,7 @@ import {
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import ResourceState from "../../components/resource stats/resourceState"
+import ResourceState from "../resource stats/resourceState"
 import useMediaQuery from "@/hooks/useMediaQuery"
 
 interface DataTableProps<Employee, TValue> {

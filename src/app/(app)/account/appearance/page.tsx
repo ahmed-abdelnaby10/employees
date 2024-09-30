@@ -1,4 +1,4 @@
-import { AppearanceForm } from "@/sections/account/AppearanceForm";
+import { AppearanceForm } from "@/components/account/AppearanceForm";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next"
 

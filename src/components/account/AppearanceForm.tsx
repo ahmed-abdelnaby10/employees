@@ -114,7 +114,6 @@ export function AppearanceForm() {
             </FormItem>
           )}
         />
-
         <Button type="submit">Update preferences</Button>
       </form>
     </Form>

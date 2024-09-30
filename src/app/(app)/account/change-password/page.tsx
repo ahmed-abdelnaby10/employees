@@ -1,4 +1,4 @@
-import { PasswordForm } from "@/sections/account/PasswordForm";
+import { PasswordForm } from "@/components/account/PasswordForm";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { Metadata } from "next";
 

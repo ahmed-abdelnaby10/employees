@@ -1,4 +1,4 @@
-import UpdateEmployee from "@/sections/update-employee/UpdateEmployee";
+import UpdateEmployee from "@/components/update-employee/UpdateEmployee";
 import { Metadata } from "next";
 
 

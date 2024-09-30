@@ -1,4 +1,4 @@
-import EmployeePreview from "@/sections/employee preview/EmployeePreview";
+import EmployeePreview from "@/components/employee preview/EmployeePreview";
 import { Metadata } from "next";
 
 export const generateMetadata = async ({ params }: { params: { id: string } }): Promise<Metadata> => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Badge } from "../../components/ui/badge"
+import { Badge } from "../ui/badge"
 import { Calendar } from "lucide-react"
 import { extractDateTimeInfo } from "@/utils/DateAndTimeInfo"
 
