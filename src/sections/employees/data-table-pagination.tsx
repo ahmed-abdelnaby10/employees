@@ -24,9 +24,7 @@ export function DataTablePagination<TData>({ table, pageCount, page, setPage }: 
 
   const handlePageChange = (newPage: number) => {
     table.setPageIndex(newPage)
-    console.log(table.getState().pagination.pageIndex);
     setPage(newPage + 1)
-    
     queryClient.invalidateQueries(['employees', newPage + 1])
   }
 

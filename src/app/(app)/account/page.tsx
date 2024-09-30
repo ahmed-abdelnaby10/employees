@@ -1,6 +1,10 @@
-import { AccountForm } from "@/components/account/AccountForm";
+import { AccountForm } from "@/sections/account/AccountForm";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next"
 
+export const metadata: Metadata = {
+    title: "Account",
+}
 
 export default function SettingsAccountPage() {
   return (

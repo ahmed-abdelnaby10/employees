@@ -2,7 +2,6 @@ import { PREVIEW_URL } from "./constants";
 
 export async function convertMediaToFile(media: Media): Promise<File | null> {
     if (!media) {
-        console.log("No media object provided");
         return null;
     }
     try {

@@ -1,8 +1,6 @@
 "use client"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
-import { Row } from "@tanstack/react-table"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -18,12 +16,7 @@ import { deleteEmployee } from "@/_api/mutations/deleteEmployee.mutation"
 import toast, { Toaster } from "react-hot-toast"
 import { useTheme } from "next-themes"
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
-}
-
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
-  const id: string = row.original._id
+export function DataTableRowActions({ id }: { id: any }) {
   const router = useRouter()
   const { theme } = useTheme()
   const queryClient = useQueryClient();

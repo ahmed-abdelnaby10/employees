@@ -21,10 +21,10 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Work Sphere',
-    default: 'Home | Work Sphere'
+    template: '%s | Taltrix',
+    default: 'Home | Taltrix'
   },
-  description: 'Created by Ahmed M. Abdelnaby',
+  description: 'Talent + Matrix, highlighting a smart structure for employee management. Created by Ahmed M Abdelnaby.',
 }
 
 export default function RootLayout({

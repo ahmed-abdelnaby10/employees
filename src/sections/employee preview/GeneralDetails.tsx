@@ -1,9 +1,9 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { Label } from "../ui/label"
-import { Button } from "../ui/button"
-import { Separator } from "../ui/separator"
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
+import { Label } from "../../components/ui/label"
+import { Button } from "../../components/ui/button"
+import { Separator } from "../../components/ui/separator"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { PREVIEW_URL } from "@/utils/constants"

@@ -4,13 +4,14 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
-import { Avatar, AvatarImage } from "../ui/avatar"
+import { Avatar, AvatarImage } from "../../components/ui/avatar"
 import { PREVIEW_URL } from "@/utils/constants"
 import maleUserPlaceholder from "../../../public/images/male-user.png"
 
 export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "media",
+    id: "media",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="ID" />
     ),
@@ -39,6 +40,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "contact",
+    id: "contact",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
@@ -60,6 +62,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "contact.email",
+    id: "contact.email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
@@ -78,6 +81,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "fixed_salary",
+    id: "fixed_salary",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Salary" />
     ),
@@ -95,6 +99,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "position",
+    id: "position",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Position" />
     ),
@@ -112,6 +117,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions id={row.original._id} />,
   },
 ]

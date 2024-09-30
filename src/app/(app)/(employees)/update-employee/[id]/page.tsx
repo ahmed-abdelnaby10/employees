@@ -1,4 +1,13 @@
-import UpdateEmployee from "@/components/update-employee/UpdateEmployee";
+import UpdateEmployee from "@/sections/update-employee/UpdateEmployee";
+import { Metadata } from "next";
+
+
+export const generateMetadata = async ({ params }: { params: { id: string } }): Promise<Metadata> => {
+    const id = params.id.slice(0, 11)
+    return {
+        title: `Update ${id}`
+    }
+}
 
 export default async function page({ params }: { params: { id: string } }) {
     const id = params.id;

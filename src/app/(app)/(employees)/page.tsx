@@ -1,7 +1,7 @@
 'use client'
 
-import { DataTable } from "@/components/employees/data-table"
-import { columns } from "@/components/employees/columns"
+import { DataTable } from "@/sections/employees/data-table"
+import { columns } from "@/sections/employees/columns"
 import { useQuery } from "react-query"
 import { getAllEmployees } from "@/_api/queries/employees.query"
 import { useEffect, useState } from "react"

@@ -32,6 +32,7 @@ import { ACCESS_TOKEN } from "@/utils/constants"
 import { Loader } from "lucide-react"
 import { useDispatch } from "@/lib/rtk"
 import { setUser } from "@/lib/rtk/slices/user.slice"
+import React from "react"
 
 const formSchema = z.object({
     email: z
@@ -57,7 +58,6 @@ export function LoginForm() {
             const user: User =  response?.data?.data?.user
             if (token) {
                 Cookies.set(ACCESS_TOKEN, token)  
-                console.log("user::::", user)
                 dispatch(setUser(user))
                 toast.success('Logined successfully.');
                 router.push("/")
@@ -79,7 +79,6 @@ export function LoginForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log('Submitting form values:', values)
         mutate(values)
     }
 

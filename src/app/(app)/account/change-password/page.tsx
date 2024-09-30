@@ -1,6 +1,10 @@
-import { PasswordForm } from "@/components/account/PasswordForm";
+import { PasswordForm } from "@/sections/account/PasswordForm";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Change Password",
+}
 
 export default function ChangePassword() {
     return (

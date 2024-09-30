@@ -1,11 +1,5 @@
-import { SidebarNav } from "@/components/account/SidebarNav"
+import { SidebarNav } from "@/sections/account/SidebarNav"
 import { Separator } from "@/components/ui/separator"
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-    title: "Forms",
-    description: "Advanced form example using react-hook-form and Zod.",
-}
 
 const sidebarNavItems = [
     {

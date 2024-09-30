@@ -1,4 +1,9 @@
-import AddEmployee from "@/components/add-employee/AddEmployee";
+import AddEmployee from "@/sections/add-employee/AddEmployee";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Add new employee"
+}
 
 export default function AddNewEmployee() {
     return (

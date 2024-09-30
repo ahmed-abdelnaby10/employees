@@ -23,11 +23,12 @@ import { updateUser } from "@/_api/mutations/updateUser.mutation"
 import toast, { Toaster } from "react-hot-toast"
 import { AxiosError, AxiosResponse } from "axios"
 import { convertMediaToFile } from "@/utils/convertMediaToFile"
-import { Label } from "../ui/label"
+import { Label } from "../../components/ui/label"
 import Image from "next/image"
 import { Loader, Trash2 } from "lucide-react"
 import { updateUserData } from "@/lib/rtk/slices/user.slice"
 import userPlaceholder from "../../../public/images/male-user.png"
+import React from "react"
 
 const accountFormSchema = z.object({
   name: z
@@ -101,11 +102,6 @@ export function AccountForm() {
       })
     }
   }, [media, setPreviewImage])
-  useEffect(()=> {
-    console.log("MEDIA ::",media)
-    console.log("PREVIEW MEDIA ::",previewImage)
-  }, [media, previewImage])
-
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

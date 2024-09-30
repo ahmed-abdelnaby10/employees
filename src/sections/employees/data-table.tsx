@@ -15,7 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-
 import {
   Table,
   TableBody,
@@ -24,11 +23,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
 import { DataTablePagination } from "./data-table-pagination"
 import { DataTableToolbar } from "./data-table-toolbar"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import ResourceState from "../resource stats/resourceState"
+import ResourceState from "../../components/resource stats/resourceState"
 import useMediaQuery from "@/hooks/useMediaQuery"
 
 interface DataTableProps<Employee, TValue> {
@@ -76,10 +74,10 @@ export function DataTable<Employee, TValue>({
       setColumnVisibility({
         contact: true,
         contact_email: false,
-        media: false,    // ID (media)
-        fixed_salary: false,  // Salary
-        position: false, // Position
-        actions: true,  // Actions
+        media: false,
+        fixed_salary: false,
+        position: false,
+        actions: true, 
       })
     } else if (isLessThan768px) {
       // Show only "ID" and "Name" columns
@@ -137,10 +135,6 @@ export function DataTable<Employee, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
-
-  useEffect(() => {
-    console.log("table.getRowModel()" , table.getRowModel())
-  }, [table])
   
   return (
     <div className="space-y-4">

@@ -1,6 +1,10 @@
-import { AppearanceForm } from "@/components/account/AppearanceForm";
+import { AppearanceForm } from "@/sections/account/AppearanceForm";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next"
 
+export const metadata: Metadata = {
+    title: "Appearance",
+}
 
 export default function SettingsAppearancePage() {
   return (

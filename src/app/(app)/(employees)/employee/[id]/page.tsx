@@ -1,4 +1,12 @@
-import EmployeePreview from "@/components/employee preview/EmployeePreview";
+import EmployeePreview from "@/sections/employee preview/EmployeePreview";
+import { Metadata } from "next";
+
+export const generateMetadata = async ({ params }: { params: { id: string } }): Promise<Metadata> => {
+    const id = params.id.slice(0, 11)
+    return {
+        title: `Preview ${id}`
+    }
+}
 
 export default async function page({ params }: { params: { id: string } }) {
     const id = params.id;

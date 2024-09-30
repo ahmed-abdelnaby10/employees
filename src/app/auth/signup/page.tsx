@@ -1,5 +1,10 @@
-import { SignupForm } from '@/components/auth/SignupForm'
+import { SignupForm } from '@/sections/auth/SignupForm'
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+    title: "Register"
+}
 
 export default function page() {
     return (

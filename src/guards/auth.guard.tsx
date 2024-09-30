@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { ACCESS_TOKEN } from '@/utils/constants';
 import Cookies from 'js-cookie';
 import LoadingComponent from '@/components/resource stats/LoadingComponent';
+import React from 'react';
 
 export const getAccessToken = (): string | undefined => {
     return Cookies.get(ACCESS_TOKEN);

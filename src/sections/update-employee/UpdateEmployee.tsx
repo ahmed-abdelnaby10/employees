@@ -1,19 +1,22 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast, Toaster } from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import GeneralInformation from "../reusable-components/GeneralInformation";
-import EmployeePositionAndImage from "../reusable-components/EmployeePositionAndImage";
-import { addEmployee } from "@/_api/mutations/addEmployee.mutation";
-import Contact from "../reusable-components/Contact";
+import GeneralInformation from "../../components/reusable-components/GeneralInformation";
+import EmployeePositionAndImage from "../../components/reusable-components/EmployeePositionAndImage";
+import Contact from "../../components/reusable-components/Contact";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes"
-import { Loader } from "lucide-react";
+import { getEmployeeById } from "@/_api/queries/employees.query";
+import { updateEmployee } from "@/_api/mutations/updateEmployee.mutation";
+import CompensationAdjustments from "../../components/reusable-components/CompensationAdjustments";
+
+
 
 const employeeSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -23,38 +26,68 @@ const employeeSchema = z.object({
   address: z.string().min(1, "Address is required"),
   email: z.string().email("Invalid email"),
   salary: z.number().min(1, "Salary must be a positive number"),
+  rewards: z.number().optional(),
+  deductions: z.number().optional(),
   gender: z.string().min(1, "Gender is required"),
   position: z.string().min(1, "Position is required"),
   birthDate: z.any().optional(),
   media: z.any().optional(),
 });
 
-export default function AddEmployee() {
+export default function UpdateEmployee({ employeeId }: { employeeId: string }) {
+	const { data } = useQuery({
+    queryKey: ['employeeById'],
+    queryFn: () => getEmployeeById(employeeId),
+  })
+	
+	const employee: Employee = data?.data?.data?.employee
+
+  const [formData, setFormData] = useState<UpdateEmployeeValues>({
+    firstName: employee?.contact?.first_name,
+    secondName: employee?.contact?.second_name,
+    thirdName: employee?.contact?.third_name,
+    phone: employee?.contact?.phone,
+    address: employee?.contact?.address,
+    email: employee?.contact?.email,
+    salary: employee?.fixed_salary,
+    gender: employee?.gender,
+    position: employee?.position,
+    rewards: employee?.rewards,
+    deductions: employee?.deductions,
+    birthDate: employee?.birth_date,
+    media: employee?.media,
+  });
+
+  useEffect(() => {
+    setFormData({
+      firstName: employee?.contact?.first_name,
+      secondName: employee?.contact?.second_name,
+      thirdName: employee?.contact?.third_name,
+      phone: employee?.contact?.phone,
+      address: employee?.contact?.address,
+      email: employee?.contact?.email,
+      salary: employee?.fixed_salary,
+      gender: employee?.gender,
+      position: employee?.position,
+      rewards: employee?.rewards,
+      deductions: employee?.deductions,
+      birthDate: employee?.birth_date,
+      media: employee?.media,
+    })
+  }, [employee])
+  
+
   const { theme } = useTheme()
   const router = useRouter()
   const [validationErrors, setValidationErrors] = useState<EmployeeValidationErrors>({});
-  const [previewImage, setPreviewImage] = useState<File | null>(null);
-  const [birthDate, setBirthDate] = useState<any>(null);
+  const [previewImage, setPreviewImage] = useState<File | null>(null)
+  const [date, setDate] = useState<any>(employee?.birth_date)
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    secondName: "",
-    thirdName: "",
-    phone: "",
-    address: "",
-    email: "",
-    salary: "",
-    gender: "",
-    position: "",
-    birthDate: null,
-    media: null,
-  });
-
-  const { mutate, isLoading } = useMutation(
+  const { mutate } = useMutation(
     {
-      mutationFn: (data: FormData) => addEmployee(data),
+      mutationFn: (data: FormData) => updateEmployee(data, employeeId),
       onSuccess: () => {
-        toast.success("Employee added successfully!");
+        toast.success("Employee updated successfully!");
       },
       onError: (error: AxiosError<ErrorResponse>) => {
         const errorMessage = error?.response?.data?.message || 'Something went wrong. Please try again.';
@@ -63,7 +96,7 @@ export default function AddEmployee() {
       },
       onSettled(data, error) {
         if (error === null) {
-          router.push("/")
+          router.push(`/employee/${employeeId}`)
         }
       },
     }
@@ -82,9 +115,11 @@ export default function AddEmployee() {
       formDataToSend.append("contact[phone]", validatedData.phone)
       formDataToSend.append("position", validatedData.position)
       formDataToSend.append("fixed_salary", `${validatedData.salary}`)
+      formDataToSend.append("rewards", `${validatedData.rewards}`)
+      formDataToSend.append("deductions", `${validatedData.deductions}`)
       formDataToSend.append("gender", validatedData.gender)
-      formDataToSend.append("birth_date", birthDate)
-
+      formDataToSend.append("birth_date", date)
+      
       if (previewImage) formDataToSend.append("media", previewImage);
 
       mutate(formDataToSend);
@@ -141,14 +176,14 @@ export default function AddEmployee() {
                 formData={formData} 
                 setFormData={setFormData} 
                 validationErrors={validationErrors}
-                date={birthDate}
-                setDate={setBirthDate}
+                date={date}
+                setDate={setDate}
               />
             </CardContent>
           </Card>
         </div>
 
-        <div>
+        <div className="grid auto-rows-max items-start gap-4">
           <Card>
             <CardHeader>
               <CardTitle>Employee Position</CardTitle>
@@ -160,6 +195,19 @@ export default function AddEmployee() {
                 validationErrors={validationErrors}
                 setPreviewImage={setPreviewImage}
                 previewImage={previewImage}
+                currentImage={employee?.media}
+              />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Compensation Adjustments</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CompensationAdjustments 
+                formData={formData} 
+                setFormData={setFormData} 
+                validationErrors={validationErrors}
               />
             </CardContent>
           </Card>
@@ -167,15 +215,11 @@ export default function AddEmployee() {
       </div>
 
       <footer className="mt-4 flex w-full items-center justify-between">
-        <Button type="submit" className="" disabled={isLoading}>
-          {isLoading ? (
-              <>
-                  Adding
-                  <Loader className="animate-spin h-5 w-5 ml-2 text-white dark:text-black" />
-              </>
-          ) : (
-              "Add employee"
-          )}
+        <Button type="submit">
+          Update Employee
+        </Button>
+        <Button variant="destructive" onClick={()=>{router.push("/")}}>
+          Discard
         </Button>
       </footer>
     </form>

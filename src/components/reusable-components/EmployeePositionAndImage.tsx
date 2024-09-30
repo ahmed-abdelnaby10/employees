@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import { useRef, Dispatch, SetStateAction, useEffect } from "react";
 import Image from "next/image";
 import { convertMediaToFile } from "@/utils/convertMediaToFile";
+import React from "react";
 
 interface EmployeePositionAndImageProps {
   formData: any;

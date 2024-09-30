@@ -28,6 +28,7 @@ import { AxiosError } from "axios"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { Loader } from 'lucide-react';
+import React from "react"
 
 const formSchema = z.object({
     name: z
@@ -82,7 +83,6 @@ export function SignupForm() {
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log('Submitting form values:', values)
         mutate(values)
     }
 

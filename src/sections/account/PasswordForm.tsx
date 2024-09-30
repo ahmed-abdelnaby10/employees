@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
+import { Input } from "../../components/ui/input"
+import { Button } from "../../components/ui/button"
 import { useMutation } from "react-query"
 import { changePassword } from "@/_api/mutations/changePassword.mutation"
 import { useSelector } from "@/lib/rtk"
@@ -14,6 +14,7 @@ import toast, { Toaster } from "react-hot-toast"
 import { AxiosError } from "axios"
 import { Loader } from "lucide-react"
 import { useTheme } from "next-themes"
+import React from "react"
 
 const PasswordFormSchema = z.object({
   oldPassword: z
@@ -79,7 +80,6 @@ export function PasswordForm() {
   })
 
   function onSubmit(data: PasswordFormValues) {
-    console.log(data)
     mutate(data)
   }
 
