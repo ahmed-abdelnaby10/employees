@@ -3,11 +3,14 @@
 import React from 'react'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui/button'
-import { Home, Package2, PanelLeft, User, Users2 } from 'lucide-react'
+import { Home, Package2, PanelLeft, Users2 } from 'lucide-react'
 import Link from 'next/link'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import { usePathname } from 'next/navigation'
 import { useSelector } from '@/lib/rtk'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import Image from 'next/image'
+import placeholderUser from "../../../public/images/male-user.png"
 
 export default function NavBar() {
   const pathname = usePathname()
@@ -58,7 +61,20 @@ export default function NavBar() {
                   href="/account"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
-                  <User className="h-5 w-5" />
+                  <Avatar className='w-7 h-7 overflow-hidden'>
+                    <AvatarImage 
+                      src={`${user.media?.preview_url}`}
+                    />
+                    <AvatarFallback>
+                      <Image
+                        src={placeholderUser.src}
+                        alt='placeholderUser'
+                        width={1000}
+                        height={1000}
+                        className="rounded-full"
+                      />
+                    </AvatarFallback>
+                  </Avatar>
                   <span className="sr-only">Account</span>
                 </Link>
               </TooltipTrigger>
@@ -86,7 +102,7 @@ export default function NavBar() {
                 </Link>
                 <Link
                   href="/"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground whitespace-nowrap"
+                  className="flex items-center gap-5 px-2.5 text-muted-foreground hover:text-foreground whitespace-nowrap"
                 >
                   <Home className="h-5 w-5" />
                   Employees Dashboard
@@ -95,7 +111,7 @@ export default function NavBar() {
                   user.role === "manager" && (
                     <Link
                       href="/users"
-                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground whitespace-nowrap"
+                      className="flex items-center gap-5 px-2.5 text-muted-foreground hover:text-foreground whitespace-nowrap"
                     >
                       <Users2 className="h-5 w-5" />
                       Users Dashboard
@@ -106,7 +122,20 @@ export default function NavBar() {
                   href="/account"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground whitespace-nowrap"
                 >
-                  <User className="h-5 w-5" />
+                  <Avatar className='w-7 h-7 overflow-hidden'>
+                    <AvatarImage 
+                      src={`${user.media?.preview_url}`}
+                    />
+                    <AvatarFallback>
+                      <Image
+                        src={placeholderUser.src}
+                        alt='placeholderUser'
+                        width={1000}
+                        height={1000}
+                        className="rounded-full"
+                      />
+                    </AvatarFallback>
+                  </Avatar>
                   Account
                 </Link>
               </nav>

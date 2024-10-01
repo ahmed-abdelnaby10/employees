@@ -6,13 +6,12 @@ import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { PREVIEW_URL } from "@/utils/constants"
 import placeholderImage from "../../../public/images/male-user.png"
 
 export default function GeneralDetails({ employee }: { employee: Employee }) {
     const router = useRouter()
-    const imageUrl = employee?.media?.original_url 
-        ? `${PREVIEW_URL}${employee?.media?.original_url}` 
+    const imageUrl = employee?.media?.preview_url 
+        ? employee?.media?.preview_url
         : placeholderImage;
     return (
         <Card className="w-full row-start-2 col-start-1 md:col-end-2 col-end-3 lg:col-end-3">

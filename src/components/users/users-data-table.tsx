@@ -23,20 +23,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { DataTablePagination } from "./data-table-pagination"
-import { DataTableToolbar } from "./data-table-toolbar"
+import { UsersPagination } from "./user-pagination"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import ResourceState from "../resource stats/resourceState"
 import useMediaQuery from "@/hooks/useMediaQuery"
+import { UsersToolbar } from "./user-toolbar"
 
-interface DataTableProps<Employee, TValue> {
-  columns: ColumnDef<Employee, TValue>[]
-  data: Employee[]
+interface UsersTableProps<UserInterface, TValue> {
+  columns: ColumnDef<UserInterface, TValue>[]
+  data: UserInterface[]
   isError: boolean
   isLoading: boolean
   limit: number
   page: number
-  totalEmployees: number
+  totalUsers: number
   totalPages: number
   setPagination: Dispatch<SetStateAction<PaginationState>>
   pagination: PaginationState
@@ -46,7 +46,7 @@ interface DataTableProps<Employee, TValue> {
   sorting: SortingState
 }
 
-export function DataTable<Employee, TValue>({ 
+export function UsersDataTable<UserInterface, TValue>({ 
   columns, 
   data, 
   isError, 
@@ -59,7 +59,7 @@ export function DataTable<Employee, TValue>({
   setNameFilter,
   setSorting,
   sorting
-}: DataTableProps<Employee, TValue>) {
+}: UsersTableProps<UserInterface, TValue>) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -72,41 +72,37 @@ export function DataTable<Employee, TValue>({
     if (isLessThan640px) {
       // Show only "Name" column
       setColumnVisibility({
-        contact: true,
-        "contact.email": false,
+        name: true,
+        email: false,
         media: false,
-        fixed_salary: false,
-        position: false,
+        role: false,
         actions: true, 
       })
     } else if (isLessThan768px) {
       // Show only "ID" and "Name" columns
       setColumnVisibility({
-        contact: true,
+        name: true,
         media: true,
-        "contact.email": false,
-        fixed_salary: false,
-        position: true,
+        email: false,
+        role: false,
         actions: true,
       })
     } else if (isLessThan1024px) {
-      // Show all columns except "Email" and "Salary"
+      // Show all columns except "Email" and "Role"
       setColumnVisibility({
-        contact: true,
+        name: true,
         media: true,
-        "contact.email": false,
-        fixed_salary: false,
-        position: true,
+        email: false,
+        role: false,
         actions: true,
       })
     } else {
       // Show all columns
       setColumnVisibility({
-        contact: true,
+        name: true,
         media: true,
-        "contact.email": true,
-        fixed_salary: true,
-        position: true,
+        email: true,
+        role: true,
         actions: true,
       })
     }
@@ -138,12 +134,12 @@ export function DataTable<Employee, TValue>({
   
   return (
     <div className="space-y-4">
-      <DataTableToolbar 
+      <UsersToolbar
         table={table} 
         setNameFilter={setNameFilter}
       />
       <div className="rounded-md border custom-scrollbar">
-        <Table className="">
+        <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup, index) => (
               <TableRow key={headerGroup.id + index}>
@@ -214,7 +210,7 @@ export function DataTable<Employee, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination 
+      <UsersPagination 
         table={table} 
         pageCount={totalPages} 
         page={page} 

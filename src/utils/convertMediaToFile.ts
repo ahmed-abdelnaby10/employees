@@ -1,14 +1,13 @@
-import { PREVIEW_URL } from "./constants";
 
 export async function convertMediaToFile(media: Media): Promise<File | null> {
     if (!media) {
         return null;
     }
     try {
-        const response = await fetch(`${PREVIEW_URL}${media.original_url}`);
+        const response = await fetch(`${media.original_url}`);
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch file from ${PREVIEW_URL}${media.original_url}`);
+            throw new Error(`Failed to fetch file from ${media.original_url}`);
         }
 
         const blob = await response.blob();

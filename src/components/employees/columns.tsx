@@ -5,7 +5,6 @@ import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { Avatar, AvatarImage } from "../ui/avatar"
-import { PREVIEW_URL } from "@/utils/constants"
 import maleUserPlaceholder from "../../../public/images/male-user.png"
 
 export const columns: ColumnDef<Employee>[] = [
@@ -31,7 +30,7 @@ export const columns: ColumnDef<Employee>[] = [
       return (
         <Avatar>
           <AvatarImage 
-            src={`${PREVIEW_URL}${media.original_url}`}
+            src={`${media.preview_url}`}
           /> 
         </Avatar>
       )
@@ -74,7 +73,7 @@ export const columns: ColumnDef<Employee>[] = [
       }
 
       return (
-        <div className="capitalize font-medium text-base">{contact.email}</div>
+        <div className="font-medium text-base">{contact.email}</div>
       )
     },
     enableSorting: false

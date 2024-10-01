@@ -5,6 +5,7 @@ import { Button } from "../ui/button"
 import { useRouter } from "next/navigation"
 import { Separator } from "../ui/separator"
 import { format } from "date-fns"
+import { calculateAge } from "@/utils/calulateAge"
 
 export default function PersonalDetails({ employee }: { employee: Employee }) {
     const router = useRouter()
@@ -30,7 +31,7 @@ export default function PersonalDetails({ employee }: { employee: Employee }) {
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Date of birth</Label>
-                            <p className="capitalize">{employee?.birth_date ? format(employee?.birth_date, "dd/MM/yyyy") : "Unknown!"}</p>
+                            <p className="capitalize">{employee?.birth_date ? `${format(employee?.birth_date, "dd/MM/yyyy")} (${calculateAge(employee?.birth_date)})` : "Unknown!"}</p>
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Position</Label>
@@ -38,19 +39,19 @@ export default function PersonalDetails({ employee }: { employee: Employee }) {
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Salary</Label>
-                            <p className="">{employee?.fixed_salary}</p>
+                            <p className="">{employee?.fixed_salary}$</p>
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Rewards</Label>
-                            <p className="">{employee?.rewards}</p>
+                            <p className="">{employee?.rewards}$</p>
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Deductions</Label>
-                            <p className="">{employee?.deductions}</p>
+                            <p className="">{employee?.deductions}$</p>
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label>Net Salary</Label>
-                            <p className="">{employee?.final_salary}</p>
+                            <p className="">{employee?.final_salary}$</p>
                         </div>
                     </div>
                 </div>

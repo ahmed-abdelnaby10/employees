@@ -61,7 +61,6 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ formData, setFormData
                                 value={formattedDate}
                                 type="text"
                                 readOnly
-                                // onClick={(e) => e.preventDefault()}
                                 className="cursor-pointer"
                             />
                         </div>
@@ -71,7 +70,8 @@ const GeneralInformation: FC<GeneralInformationProps> = ({ formData, setFormData
                             mode="single"
                             selected={date}
                             onSelect={setDate}
-                            className="rounded-md shadow w-full h-full"
+                            className="rounded-md shadow w-full h-full calendar"
+                            pagedNavigation={false}
                         />
                     </PopoverContent>
                 </Popover>

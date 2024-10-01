@@ -58,8 +58,8 @@ export function AccountForm() {
       mutationFn: (data: FormData) => updateUser(data, _id as string),
       onSuccess: async (res: AxiosResponse) => {
         toast.success("Your account updated successfully!");
-        const updatedName = await res.data?.data?.user?.name; 
-        const updatedMedia = await res.data?.data?.user?.media; 
+        const updatedName: string = await res.data?.data?.user?.name; 
+        const updatedMedia: Media = await res.data?.data?.user?.media; 
         dispatch(updateUserData({
           name: updatedName,
           media: updatedMedia

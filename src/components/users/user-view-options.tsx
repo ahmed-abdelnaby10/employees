@@ -13,11 +13,11 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 
-interface DataTableViewOptionsProps<TData> {
+interface UsersViewOptionsProps<TData> {
   table: Table<TData>
 }
 
-export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps<TData>) {
+export function UsersViewOptions<TData>({ table }: UsersViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -47,7 +47,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id === "contact" ? "Name" : column.id === "contact.email" ? "Email" : column.id === "media" ? "ID" : column.id === "fixed_salary" ? "Salary" : column.id === "position" ? "Position" : column.id === "actions" ? "actions" : ""}
+                {column.id === "name" ? "Name" : column.id === "email" ? "Email" : column.id === "media" ? "ID" : column.id === "role" ? "Role" : column.id === "actions" ? "actions" : ""}
               </DropdownMenuCheckboxItem>
             )
           })}

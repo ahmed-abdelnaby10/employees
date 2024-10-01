@@ -64,3 +64,42 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom table scroll bar */
+
+.custom-scrollbar > div::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scrollbar > div::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary));
+  border-radius: 10px;
+}
+
+.custom-scrollbar > div::-webkit-scrollbar-track {
+  background-color: hsl(var(--accent));
+  border-radius: 10px;
+}
+
+/* Custom calendar */
+
+.calendar > div {
+  justify-content: center;
+}
+.calendar > div > div {
+  width: 100%;
+}
+.calendar > div > div table thead tr th ,
+.calendar > div > div table tbody tr td{
+  width: 100%;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

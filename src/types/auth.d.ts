@@ -9,7 +9,7 @@ interface LoginValues {
     password: string;
 }
 
-interface User {
+interface UserInterface {
     _id: string,
     name: string,
     email: string,
@@ -17,4 +17,21 @@ interface User {
     created_at: string,
     updated_at: string,
     media: Media | null
+}
+
+interface UsersQueryParams {
+    email?: string;
+    name?: string;
+    id?: string;
+    sortBy?: string;
+    order?: 'asc' | 'desc';
+    page?: number;
+}
+
+interface UsersData {
+    users: UserInterface[],
+    limit: number
+    page: number
+    total_users: number
+    total_pages: number
 }

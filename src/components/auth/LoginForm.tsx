@@ -55,7 +55,7 @@ export function LoginForm() {
         },
         onSuccess: (response) => {
             const token =  response?.data?.data?.token
-            const user: User =  response?.data?.data?.user
+            const user: UserInterface =  response?.data?.data?.user
             if (token) {
                 Cookies.set(ACCESS_TOKEN, token)  
                 dispatch(setUser(user))
@@ -83,7 +83,7 @@ export function LoginForm() {
     }
 
     return (
-        <Card className="max-w-sm">
+        <Card className="max-w-sm w-full">
             <Toaster 
                 position="top-center"
                 reverseOrder={true}

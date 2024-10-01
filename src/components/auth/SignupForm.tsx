@@ -87,7 +87,7 @@ export function SignupForm() {
     }
 
     return (
-        <Card className="max-w-sm">
+        <Card className="w-full max-w-sm">
             <Toaster 
                 position="top-center"
                 reverseOrder={true}
