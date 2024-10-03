@@ -5,6 +5,8 @@ const initialState: UserInterface= {
     name: "",
     email: "",
     role: "",
+    gender: "",
+    phone: "",
     created_at: "",
     updated_at: "",
     media: null
@@ -19,6 +21,8 @@ const userSlice = createSlice({
             state.name = action.payload.name;
             state.email = action.payload.email;
             state.role = action.payload.role;
+            state.gender = action.payload.gender;
+            state.phone = action.payload.phone;
             state.created_at = action.payload.created_at;
             state.updated_at = action.payload.updated_at;
             state.media = action.payload.media;
@@ -29,6 +33,8 @@ const userSlice = createSlice({
             state._id = state._id;
             state.email = state.email;
             state.role = state.role;
+            state.gender = state.gender;
+            state.phone = state.phone;
             state.created_at = state.created_at;
             state.updated_at = state.updated_at;
         }

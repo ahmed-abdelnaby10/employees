@@ -14,6 +14,8 @@ interface UserInterface {
     name: string,
     email: string,
     role: string,
+    gender: string,
+    phone: string,
     created_at: string,
     updated_at: string,
     media: Media | null
@@ -35,3 +37,10 @@ interface UsersData {
     total_users: number
     total_pages: number
 }
+
+interface UserValidationErrors {
+    name?: string;
+    phone?: string;
+    gender?: string;
+    media?: string;
+};  

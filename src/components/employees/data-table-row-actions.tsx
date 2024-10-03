@@ -30,8 +30,9 @@ export function DataTableRowActions({ id }: { id: any }) {
       if (status === 200) {
         toast.success("Employee deleted successfully!")
       }
-    } catch (error) {
-      toast.error("There is something went wrong! try again.")
+    } catch (error: any) {
+      const errorMessage = error?.response?.data?.message || 'Something went wrong. Please try again.';
+      toast.error(errorMessage);
     }
   }
 

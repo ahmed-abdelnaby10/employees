@@ -1,19 +1,7 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { z } from "zod"
-
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "@/lib/rtk"
 import { useEffect, useRef, useState } from "react"
@@ -29,6 +17,7 @@ import { Loader, Trash2 } from "lucide-react"
 import { updateUserData } from "@/lib/rtk/slices/user.slice"
 import userPlaceholder from "../../../public/images/male-user.png"
 import React from "react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 const accountFormSchema = z.object({
   name: z
@@ -39,20 +28,41 @@ const accountFormSchema = z.object({
     .min(3, {
       message: "Name must be at least 3 characters!",
     }),
+  phone: z
+    .string()
+    .regex(/^\+?\d{10,14}$/, "Invalid phone number")
+    .optional(),
+  gender: z
+    .string()
+    .optional(),
   media: z
     .any()
     .optional()
 })
 
-type AccountFormValues = z.infer<typeof accountFormSchema>
-
 export function AccountForm() {
-  const { _id, name, media } = useSelector(state => state.user)
+  const { _id, name, media, gender, phone } = useSelector(state => state.user)
   const { theme } = useTheme()
   const [previewImage, setPreviewImage] = useState<File | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch()
-  
+
+  const [formData, setFormData] = useState({
+    name: name,
+    gender: gender || "",
+    phone: phone || "",
+    media: media || null,
+  });
+  useEffect(() => {
+    setFormData({
+      name: name,
+      gender: gender,
+      phone: phone,
+      media: media,
+    })
+  }, [gender, media, name, phone])
+  const [validationErrors, setValidationErrors] = useState<UserValidationErrors>({});
+
   const { mutate, isLoading } = useMutation(
     {
       mutationFn: (data: FormData) => updateUser(data, _id as string),
@@ -60,9 +70,11 @@ export function AccountForm() {
         toast.success("Your account updated successfully!");
         const updatedName: string = await res.data?.data?.user?.name; 
         const updatedMedia: Media = await res.data?.data?.user?.media; 
+        const updatedGender: string = await res.data?.data?.user?.gender; 
         dispatch(updateUserData({
           name: updatedName,
-          media: updatedMedia
+          media: updatedMedia,
+          gender: updatedGender,
         }))        
       },
       onError: (error: AxiosError<ErrorResponse>) => {
@@ -73,28 +85,31 @@ export function AccountForm() {
     }
   );
 
-  const defaultValues: Partial<AccountFormValues> = {
-    name: name,
-    media: media
-  }
-
-  const form = useForm<AccountFormValues>({
-    resolver: zodResolver(accountFormSchema),
-    defaultValues,
-  })
-
-  async function onSubmit(values: z.infer<typeof accountFormSchema>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      const validatedData = accountFormSchema.parse(values);
+      const validatedData = accountFormSchema.parse(formData);
       const formDataToSend = new FormData();
+
       formDataToSend.append("name", validatedData.name)
+      if (validatedData.gender) formDataToSend.append("gender", validatedData.gender);
+      if (validatedData.phone) formDataToSend.append("phone", validatedData.phone);
       if (previewImage) formDataToSend.append("media", previewImage);
+
       mutate(formDataToSend);
-      
+      setValidationErrors({});
     } catch (error) {
-      toast.error("Please fix the form errors.");
+      if (error instanceof z.ZodError) {
+        setValidationErrors(
+          error.errors.reduce((acc, curr) => {
+            acc[curr.path[0]] = curr.message;
+            return acc;
+          }, {})
+        );
+        toast.error("Please fix the form errors.");
+      }
     }
-  }
+  };
   useEffect(()=> {
     if (media) {
       convertMediaToFile(media).then((file)=> {
@@ -119,7 +134,7 @@ export function AccountForm() {
   };
 
   return (
-    <Form {...form}>
+    <>
       <Toaster 
         position="top-center"
         reverseOrder={true}
@@ -130,24 +145,51 @@ export function AccountForm() {
             }
         }}
       />
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Your name" {...field} type="text"/>
-              </FormControl>
-              <FormDescription>
-                This is the name that will be displayed on your profile and in
-                emails.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="grid gap-3">
+          <Label htmlFor="name">Name</Label>
+          <Input
+            id="name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            type="text"
+            placeholder="max"
+          />
+          {validationErrors.name && (
+            <p className="text-red-500 text-xs -mt-2">{validationErrors.name}</p>
           )}
-        />
+        </div>
+        <div className="grid gap-3">
+          <Label htmlFor="phone">Phone</Label>
+          <Input
+            id="phone"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            type="text"
+            placeholder="+20 1100100200"
+          />
+          {validationErrors.phone && (
+            <p className="text-red-500 text-xs -mt-2">{validationErrors.phone}</p>
+          )}
+        </div>
+        <div className="grid gap-2">
+          <Label>Gender</Label>
+          <Select
+            value={formData.gender}
+            onValueChange={(value) => setFormData({ ...formData, gender: value })}
+          >
+              <SelectTrigger aria-label="Select gender">
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="male">Male</SelectItem>
+                <SelectItem value="female">Female</SelectItem>
+              </SelectContent>
+          </Select>
+          {validationErrors.gender && (
+            <p className="text-red-500 text-xs -mt-2">{validationErrors.gender}</p>
+          )}
+        </div>
         <div className="grid gap-3">
           <Label>Upload Image</Label>
           <Label
@@ -185,13 +227,17 @@ export function AccountForm() {
             <Image
               src={userPlaceholder.src}
               alt="Selected Image"
+              priority
               className="w-32 h-32 object-cover rounded-md"
               width={1000}
               height={1000}
             />
           )}
+          {validationErrors.media && (
+            <p className="text-red-500 text-xs -mt-2">{validationErrors.media}</p>
+          )}
         </div>
-        <Button type="submit" className="" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? (
               <>
                   updating
@@ -202,6 +248,6 @@ export function AccountForm() {
           )}
         </Button>
       </form>
-    </Form>
+    </>
   )
 }

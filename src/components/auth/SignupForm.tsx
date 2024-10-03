@@ -28,7 +28,7 @@ import { AxiosError } from "axios"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
 import { Loader } from 'lucide-react';
-import React from "react"
+import React, { useCallback } from "react"
 
 const formSchema = z.object({
     name: z
@@ -82,9 +82,9 @@ export function SignupForm() {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        mutate(values)
-    }
+    const onSubmit = useCallback((values: z.infer<typeof formSchema>)=>{
+        mutate(values);
+    },[mutate])
 
     return (
         <Card className="w-full max-w-sm">
